@@ -1228,6 +1228,7 @@ h1, h2, h3 {
   color: var(--text-muted);
   line-height: 1.75;
   font-size: 0.95rem;
+  white-space: pre-line;
 }
 
 .work-modal-stats {
