@@ -10,8 +10,14 @@
   --text-muted: #94a3b8;
   --nav-height: 76px;
 
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-sans: 'Outfit', sans-serif;
+  /* 欧文は Outfit / Space Grotesk。日本語グリフはこれらに含まれないため、
+     指定がないと generic sans-serif に落ち、環境によっては中国語フォントで
+     描画されて漢字が別字形になる。各OSの標準日本語フォントを明示する
+     (Webフォントは読み込まず、表示速度は据え置き) */
+  --font-jp: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+    'Yu Gothic UI', YuGothic, Meiryo, sans-serif;
+  --font-display: 'Space Grotesk', var(--font-jp);
+  --font-sans: 'Outfit', var(--font-jp);
 }
 
 * {
@@ -696,6 +702,8 @@ body.has-modal .scroll-progress-bar {
   color: var(--text);
   margin-bottom: 1.75rem;
   max-width: 640px;
+  /* スマホでは3行に折り返すため、既定の約1.2では詰まって見える */
+  line-height: 1.6;
 }
 
 .hero-description {
@@ -828,6 +836,8 @@ body.has-modal .scroll-progress-bar {
 .section-lead {
   color: var(--text-muted);
   margin-top: 0.5rem;
+  /* 指定がないと約1.2になり、折り返した日本語が詰まって読みづらい */
+  line-height: 1.7;
 }
 
 /* Skills Styles */
@@ -889,6 +899,8 @@ body.has-modal .scroll-progress-bar {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-muted);
+  /* 「AI API連携 (Gemini API)」など、2行に折り返すタグがあるため */
+  line-height: 1.45;
 }
 
 /* Works Styles */
