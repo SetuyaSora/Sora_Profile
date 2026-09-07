@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Award, ExternalLink, ZoomIn } from 'lucide-react';
 import { GithubIcon } from './icons/GithubIcon';
@@ -72,7 +73,10 @@ export const WorkDetailModal: React.FC<Props> = ({ work, onClose }) => {
     };
   }, [work]);
 
-  return (
+  // body 直下へポータルで描画する。Works セクション内に置いたままだと、
+  // framer-motion が付ける transform / opacity で祖先に重ね合わせコンテキストが
+  // でき、モーダルの z-index が固定ナビバーより下に閉じ込められることがある
+  return createPortal(
     <AnimatePresence>
       {work && (
         <motion.div
@@ -200,6 +204,7 @@ export const WorkDetailModal: React.FC<Props> = ({ work, onClose }) => {
           </AnimatePresence>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
