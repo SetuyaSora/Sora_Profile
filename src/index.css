@@ -1160,12 +1160,17 @@ h1, h2, h3 {
 .work-modal-backdrop {
   position: fixed;
   inset: 0;
+  /* iOS Safari では inset:0 の固定要素がアドレスバー/ツールバーの裏まで広がるため、
+     100vh 基準だとモーダルの下端がツールバーに隠れる。実際に見えている高さ (dvh) に
+     合わせることで、上下ともツールバーの内側に収める */
+  height: 100vh;
+  height: 100dvh;
   z-index: 3000;
   display: flex;
   align-items: safe center;
   justify-content: center;
   /* 上はナビバーに隠れない位置から始める (万一ナビバーが上に描画される環境でも見切れない) */
-  padding: calc(var(--nav-height) + 12px) 16px 16px;
+  padding: calc(var(--nav-height) + 12px) 16px calc(16px + env(safe-area-inset-bottom, 0px));
   overflow: hidden;
   overscroll-behavior: contain;
   background: rgba(6, 9, 19, 0.78);
@@ -1328,7 +1333,8 @@ h1, h2, h3 {
 @media (max-width: 600px) {
   .work-modal {
     padding: 1.75rem 1.25rem;
-    max-height: 88vh;
+    /* 88vh のような画面高基準の指定にすると、ナビバー分の余白とツールバーの高さが
+       考慮されず下端がはみ出す。背景(.work-modal-backdrop)の内側に収める指定を維持する */
   }
   .work-modal-title {
     font-size: 1.3rem;
@@ -1416,13 +1422,16 @@ h1, h2, h3 {
 .work-lightbox {
   position: fixed;
   inset: 0;
+  /* モーダル背景と同じ理由。ツールバーの裏に下端が隠れないよう実表示高に合わせる */
+  height: 100vh;
+  height: 100dvh;
   z-index: 3100;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  padding: 32px;
+  padding: 32px 24px calc(24px + env(safe-area-inset-bottom, 0px));
   background: rgba(6, 9, 19, 0.94);
   cursor: zoom-out;
 }
