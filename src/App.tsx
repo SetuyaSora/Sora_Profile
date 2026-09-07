@@ -67,73 +67,69 @@ function App() {
         )}
       </AnimatePresence>
 
-      {!loading && (
-        <>
-          <a href="#main-content" className="skip-link">
-            メインコンテンツへスキップ
-          </a>
+      {/* ローディング画面は不透明なオーバーレイなので、本体は最初から描画しておく。
+          読み込み完了後にマウントすると、進行バーの useScroll がまだ存在しない
+          コンテナを掴んでしまい、スクロールしてもバーが伸びなくなる */}
+      <a href="#main-content" className="skip-link">
+        メインコンテンツへスキップ
+      </a>
 
-          {/* スクロール進行インジケーター (上部固定) */}
-          <motion.div
-            className="scroll-progress-bar"
-            style={{ scaleX }}
-          />
+      {/* スクロール進行インジケーター (上部固定) */}
+      <motion.div className="scroll-progress-bar" style={{ scaleX }} />
 
-          {/* 動的背景 */}
-          <Background />
+      {/* 動的背景 */}
+      <Background />
 
-          {/* ナビゲーション */}
-          <Navbar scrollContainerRef={containerRef} />
+      {/* ナビゲーション */}
+      <Navbar scrollContainerRef={containerRef} />
 
-          {/* メインスクロールコンテナ */}
-          <div
-            className="scroll-container"
-            id="main-content"
-            ref={containerRef}
-            onScroll={handleScroll}
-          >
-            <div id="home">
-              <Hero />
-            </div>
+      {/* メインスクロールコンテナ */}
+      <div
+        className="scroll-container"
+        id="main-content"
+        ref={containerRef}
+        onScroll={handleScroll}
+      >
+        <div id="home">
+          <Hero />
+        </div>
 
-            <div id="about">
-              <About />
-            </div>
+        <div id="about">
+          <About />
+        </div>
 
-            <div className="snap-section-long">
-              <div id="skills">
-                <Skills />
-              </div>
-
-              <div id="works">
-                <Works />
-              </div>
-
-              <div id="contact">
-                <Footer />
-              </div>
-            </div>
+        <div className="snap-section-long">
+          <div id="skills">
+            <Skills />
           </div>
 
-          {/* トップへ戻るボタン */}
-          <AnimatePresence>
-            {showScrollTop && (
-              <motion.button
-                className="scroll-top-button"
-                onClick={() => containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
-                aria-label="ページ上部へ戻る"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5 }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <ArrowUp size={20} className="text-neon-cyan" />
-              </motion.button>
-            )}
-          </AnimatePresence>
-        </>
-      )}
+          <div id="works">
+            <Works />
+          </div>
+
+          <div id="contact">
+            <Footer />
+          </div>
+        </div>
+      </div>
+
+      {/* トップへ戻るボタン */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            className="scroll-top-button"
+            onClick={() => containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="ページ上部へ戻る"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <ArrowUp size={20} className="text-neon-cyan" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </>
   );
 }

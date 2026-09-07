@@ -58,13 +58,18 @@ export const Navbar: React.FC<NavbarProps> = ({ scrollContainerRef }) => {
     return () => observer.disconnect();
   }, [scrollContainerRef]);
 
-  // メニュー展開中はページ本体のスクロールを止める
+  // メニュー展開中は背面のスクロールを止める。
+  // 実際にスクロールしているのは body ではなく .scroll-container なので、そちらを止める
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    if (!isMenuOpen) return;
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const previous = container.style.overflowY;
+    container.style.overflowY = 'hidden';
     return () => {
-      document.body.style.overflow = '';
+      container.style.overflowY = previous;
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, scrollContainerRef]);
 
   const handleNavigate = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });

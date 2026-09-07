@@ -119,8 +119,9 @@ body {
   position: relative;
   display: flex;
   justify-content: center;
-  /* 内容が画面高に収まるときだけ中央寄せ。超えるときは上詰めにして上端が隠れないようにする */
-  align-items: safe center;
+  /* min-height なので内容が増えればセクション自体が伸び、はみ出しは起きない。
+     safe 付きは Safari 16.3 以前で宣言ごと無効になるため使わない */
+  align-items: center;
   padding: calc(var(--nav-height) + 16px) 0 24px;
   box-sizing: border-box;
 }
@@ -442,6 +443,14 @@ h1, h2, h3 {
   background: transparent;
   border-bottom: 1px solid transparent;
   transition: background-color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* 詳細モーダル表示中はナビバーを隠す (重なりを防ぎ、狭い画面の表示領域を確保する)。
+   背面は固定されるので、スクロール進行バーもあわせて隠す */
+body.has-modal .navbar,
+body.has-modal .scroll-progress-bar {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .navbar.is-scrolled {
@@ -1167,10 +1176,11 @@ h1, h2, h3 {
   height: 100dvh;
   z-index: 3000;
   display: flex;
-  align-items: safe center;
+  /* モーダルは下の max-height で必ず内側に収まるため、safe 付きの中央寄せは不要。
+     safe は Safari 16.3 以前が非対応で、宣言ごと無効になり stretch に落ちてしまう */
+  align-items: center;
   justify-content: center;
-  /* 上はナビバーに隠れない位置から始める (万一ナビバーが上に描画される環境でも見切れない) */
-  padding: calc(var(--nav-height) + 12px) 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  padding: 16px;
   overflow: hidden;
   overscroll-behavior: contain;
   background: rgba(6, 9, 19, 0.78);
@@ -1216,8 +1226,10 @@ h1, h2, h3 {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  /* sticky で本文の上に重なるため、背後の文字が透けないよう不透明にする */
+  /* sticky で本文の上に重なるため、背後の文字が透けないよう不透明にし、
+     周囲にも同色のぼかしを広げて、文字がボタンの縁で切れて見えないようにする */
   background: #131b2b;
+  box-shadow: 0 0 10px 7px #131b2b;
   border: 1px solid var(--border);
   color: var(--text-muted);
   cursor: pointer;
@@ -1235,7 +1247,6 @@ h1, h2, h3 {
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   color: var(--secondary);
-  padding-right: 44px;
 }
 
 .work-modal-title {
@@ -1243,7 +1254,6 @@ h1, h2, h3 {
   line-height: 1.35;
   font-weight: 700;
   font-family: var(--font-display);
-  padding-right: 44px;
 }
 
 .work-modal-desc {
@@ -1431,7 +1441,7 @@ h1, h2, h3 {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  padding: 32px 24px calc(24px + env(safe-area-inset-bottom, 0px));
+  padding: 32px 24px 24px;
   background: rgba(6, 9, 19, 0.94);
   cursor: zoom-out;
 }

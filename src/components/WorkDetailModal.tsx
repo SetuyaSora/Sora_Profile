@@ -68,8 +68,11 @@ export const WorkDetailModal: React.FC<Props> = ({ work, onClose }) => {
     const container = document.querySelector<HTMLElement>('.scroll-container');
     const previous = container?.style.overflowY;
     if (container) container.style.overflowY = 'hidden';
+    // 表示中は固定ナビバーを隠す。重なりを避けつつ、狭い画面で本文に使える高さを稼ぐ
+    document.body.classList.add('has-modal');
     return () => {
       if (container) container.style.overflowY = previous ?? '';
+      document.body.classList.remove('has-modal');
     };
   }, [work]);
 
