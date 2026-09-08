@@ -53,6 +53,31 @@ export const WORK_FILTERS: { key: WorkCategory | 'All'; label: string }[] = [
 
 export const worksData: WorkItem[] = [
   {
+    slug: 'swifinder',
+    title: 'Swifinder',
+    category: 'Web',
+    categoryLabel: 'Web App',
+    description:
+      'Steamのゲームを、TikTokやYouTube Shortsのようなスワイプ操作で動画プレビューしながら探せるWebアプリ。独自ドメインで一般公開しています。',
+    details:
+      'Steamには12万本を超えるゲームがありますが、その多くは「そもそも探されない」「配信者が遊んでいるのを見て初めて知る」「数が多すぎて探せない」という理由で埋もれています。そこで、自分から検索しなくても短編動画を眺める感覚でゲームと出会える導線をつくりました。\n\nスワイプするたびに次のゲームの紹介動画が流れ、気に入ればワンタップでSteamのストアページへ移動できます。いいねを押すとその作品が持つタグにスコアが加算され、次に表示されるゲームの抽選確率へ反映されるレコメンドを実装しました。マイリスト管理、NGタグの設定、データのエクスポートにも対応しています。\n\nフロントエンドは React / Vite / Tailwind CSS で構築し、ゲーム情報は Steam API と SteamSpy API から取得。取得したデータは Raspberry Pi 上のサーバーで保持し、Cloudflare 経由で配信しています。UIは Figma で設計し、4,000行を超えて見通しが悪くなったコードは責務ごとに分割して整理しました。',
+    tech: ['React', 'Vite', 'Tailwind CSS', 'Steam API', 'Cloudflare', 'Raspberry Pi'],
+    highlight: '独自ドメイン swifinder.com で公開中',
+    screenshots: [
+      {
+        src: '/works/swifinder/01-swipe.webp',
+        alt: 'Swifinderの再生画面。ゲームのプレイ動画が縦画面で再生され、右側にLike・Dislike・マイリスト追加・Steam・共有のボタン、下部にゲーム名「Banana Shooter」とジャンルタグが並んでいる',
+        caption: '短編動画のUIで次々にプレビューし、気になればそのままSteamページへ',
+      },
+      {
+        src: '/works/swifinder/02-search.webp',
+        alt: 'Swifinderの検索画面。上部にゲーム名・開発者の検索欄、ジャンルタグ、日本語対応の絞り込みが並び、下にSatisfactoryやStardew Valleyなどのゲームがサムネイル付きで一覧表示されている',
+        caption: 'ジャンルや日本語対応の有無で絞り込める検索画面',
+      },
+    ],
+    extraLinks: [{ label: 'Swifinder を開く', url: 'https://swifinder.com' }],
+  },
+  {
     slug: 'madobe',
     title: '窓辺 (Madobe)',
     category: 'Extension',

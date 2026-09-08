@@ -1408,8 +1408,13 @@ body.has-modal .scroll-progress-bar {
 
 .work-shot-button img {
   display: block;
-  width: 100%;
+  /* 縦長のスマホ画面キャプチャが極端に高くならないよう、高さにも上限を設ける。
+     横長のキャプチャは先に幅で頭打ちになるため、この指定では変わらない */
+  width: auto;
+  max-width: 100%;
   height: auto;
+  max-height: 520px;
+  margin-inline: auto;
 }
 
 .work-shot-zoom {
