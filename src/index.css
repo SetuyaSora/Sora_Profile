@@ -34,6 +34,7 @@
   --board-line: rgba(148, 163, 184, 0.1);
   --board-line-border: rgba(148, 163, 184, 0.13);
   --btn-text: #fff;
+  --modal-bg: var(--card-bg);
   --orb-opacity: 0.2;
 
   /* 欧文は Outfit / Space Grotesk。日本語グリフはこれらに含まれないため、
@@ -60,7 +61,7 @@
   --text: #1e293b;
   --text-muted: #475569;
 
-  --nav-bg: rgba(246, 247, 251, 0.78);
+  --nav-bg: rgba(246, 247, 251, 0.9);
   --nav-border: rgba(15, 23, 42, 0.08);
   --menu-bg: rgba(246, 247, 251, 0.97);
   --overlay-bg: rgba(30, 41, 59, 0.5);
@@ -80,6 +81,7 @@
   --board-line: rgba(71, 85, 105, 0.14);
   --board-line-border: rgba(71, 85, 105, 0.2);
   --btn-text: #1e293b;
+  --modal-bg: rgba(255, 255, 255, 0.97);
   --orb-opacity: 0.28;
 }
 
@@ -1638,4 +1640,10 @@ body.has-modal .scroll-progress-bar {
 :root[data-theme='light'] .text-neon-pink,
 :root[data-theme='light'] .text-neon-cyan {
   text-shadow: none;
+}
+
+/* モーダルは背後のカードが透けて読めてしまうため、テーマごとに面の濃さを決める
+   (ダークは従来どおり .glass-card と同じ値) */
+.work-modal {
+  background: var(--modal-bg);
 }
