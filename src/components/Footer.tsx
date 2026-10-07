@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <section className="normal-section" style={{ borderTop: '1px solid rgba(255,255,255,0.03)' }}>
+    <section className="normal-section" style={{ borderTop: '1px solid var(--section-divider)' }}>
       <div className="container">
         <motion.div
           className="footer-content"

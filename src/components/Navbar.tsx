@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sparkles } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 interface NavItem {
   id: string;
@@ -98,14 +99,17 @@ export const Navbar: React.FC<NavbarProps> = ({ scrollContainerRef }) => {
             ))}
           </ul>
 
-          <button
-            className="navbar-mobile-toggle"
-            onClick={() => setIsMenuOpen((prev) => !prev)}
-            aria-label={isMenuOpen ? 'メニューを閉じる' : 'メニューを開く'}
-            aria-expanded={isMenuOpen}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="navbar-actions">
+            <ThemeToggle />
+            <button
+              className="navbar-mobile-toggle"
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              aria-label={isMenuOpen ? 'メニューを閉じる' : 'メニューを開く'}
+              aria-expanded={isMenuOpen}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </header>
 

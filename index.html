@@ -5,7 +5,22 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#060913" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
+    <script>
+      // 初回描画前にテーマを確定させ、ダーク→ライトのちらつきを防ぐ (useTheme.ts と同じ規則)
+      (function () {
+        var pref = 'system';
+        try {
+          var saved = localStorage.getItem('theme');
+          if (saved === 'light' || saved === 'dark') pref = saved;
+        } catch (e) {}
+        var dark = pref === 'dark' || (pref === 'system' && !window.matchMedia('(prefers-color-scheme: light)').matches);
+        var theme = dark ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#060913' : '#f6f7fb');
+      })();
+    </script>
     <title>Sora | Code Lab</title>
     <meta name="description" content="情報デザインを専攻する学生エンジニア Sora のポートフォリオ。自動化ツール、AI連携アプリ、Discord Bot、ブラウザ拡張機能などの制作実績を紹介しています。" />
 
